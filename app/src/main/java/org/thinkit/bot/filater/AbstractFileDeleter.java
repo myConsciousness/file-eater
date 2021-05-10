@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.thinkit.bot.filater.command;
+package org.thinkit.bot.filater;
 
 import java.io.Serializable;
 
@@ -21,12 +21,6 @@ import lombok.ToString;
 
 @ToString
 @EqualsAndHashCode
-public abstract class AbstractBotCommand<R> implements BotCommand<R>, Serializable {
+public abstract class AbstractFileDeleter implements FileDeleter, Serializable {
 
-    protected abstract R executeBotProcess();
-
-    @Override
-    public R execute() {
-        return this.executeBotProcess();
-    }
 }

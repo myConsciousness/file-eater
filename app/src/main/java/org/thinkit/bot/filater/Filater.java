@@ -12,21 +12,8 @@
  * the License.
  */
 
-package org.thinkit.bot.filater.command;
+package org.thinkit.bot.filater;
 
-import java.io.Serializable;
+public final class Filater extends AbstractFileDeleter {
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-@ToString
-@EqualsAndHashCode
-public abstract class AbstractBotCommand<R> implements BotCommand<R>, Serializable {
-
-    protected abstract R executeBotProcess();
-
-    @Override
-    public R execute() {
-        return this.executeBotProcess();
-    }
 }

@@ -18,6 +18,9 @@ import java.io.File;
 
 import com.mongodb.lang.NonNull;
 
+import org.apache.commons.lang3.StringUtils;
+import org.thinkit.bot.filater.config.FileDeleteConfig;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -30,11 +33,14 @@ import lombok.ToString;
 @AllArgsConstructor(staticName = "from")
 public final class FileDeleteCommand extends AbstractBotCommand<String> {
 
-    private String directoryPath;
+    /**
+     * The file delete config
+     */
+    private FileDeleteConfig fileDeleteConfig;
 
     @Override
     public String executeBotProcess() {
-        this.deleteFileRecursively(new File(this.directoryPath));
+        this.deleteFileRecursively(new File(this.fileDeleteConfig.getDirectoryPath()));
         return "";
     }
 
@@ -50,6 +56,30 @@ public final class FileDeleteCommand extends AbstractBotCommand<String> {
             }
         }
 
-        file.delete();
+        if (this.isTargetExtension(file)) {
+            file.delete();
+        }
+    }
+
+    private boolean isTargetExtension(@NonNull final File file) {
+
+        final String targetExtension = this.fileDeleteConfig.getExtension();
+
+        if (StringUtils.isEmpty(targetExtension)) {
+            return true;
+        }
+
+        return targetExtension.equals(this.getFileExtension(file));
+    }
+
+    private String getFileExtension(@NonNull final File file) {
+
+        final String fileName = file.getName();
+
+        if (!fileName.contains(".")) {
+            return "";
+        }
+
+        return fileName.substring(fileName.indexOf(".") + 1);
     }
 }

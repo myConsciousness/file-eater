@@ -14,13 +14,31 @@
 
 package org.thinkit.bot.filater;
 
+import com.mongodb.lang.NonNull;
+
+import org.thinkit.bot.filater.command.FileDeleteCommand;
+import org.thinkit.bot.filater.config.FileDeleteConfig;
+import org.thinkit.bot.filater.result.FileDeleteResult;
+
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * The {@code Filater} is an object that manages various commands for file
+ * deletion, and allows you to delete files according to the rules defined
+ * through {@code Filater} .
+ *
+ * @author Kato Shinya
+ * @since 1.0.0
+ */
 @ToString
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor(staticName = "newInstance")
-public final class Filater extends AbstractFileDeleter {
+public final class Filater implements FileDeleter {
 
+    @Override
+    public FileDeleteResult executeFileDelete(@NonNull final FileDeleteConfig fileDeleteConfig) {
+        return FileDeleteCommand.from(fileDeleteConfig).execute();
+    }
 }

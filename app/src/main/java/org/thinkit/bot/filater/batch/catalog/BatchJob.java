@@ -12,15 +12,33 @@
  * the License.
  */
 
-package org.thinkit.bot.filater;
+package org.thinkit.bot.filater.batch.catalog;
 
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.thinkit.api.catalog.BiCatalog;
 
-@ToString
-@EqualsAndHashCode(callSuper = false)
-@NoArgsConstructor(staticName = "newInstance")
-public final class Filater extends AbstractFileDeleter {
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+/**
+ * The catalog that manages batch job.
+ */
+@RequiredArgsConstructor
+public enum BatchJob implements BiCatalog<BatchJob, String> {
+
+    /**
+     * The filater bot
+     */
+    FILATER_BOT(0, "FilaterBot");
+
+    /**
+     * The code
+     */
+    @Getter
+    private final int code;
+
+    /**
+     * The tag
+     */
+    @Getter
+    private final String tag;
 }

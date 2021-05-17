@@ -12,15 +12,20 @@
  * the License.
  */
 
-package org.thinkit.bot.filater;
+package org.thinkit.bot.filater.batch.config;
 
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.springframework.batch.core.launch.support.SimpleJobLauncher;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@ToString
-@EqualsAndHashCode(callSuper = false)
-@NoArgsConstructor(staticName = "newInstance")
-public final class Filater extends AbstractFileDeleter {
+@Configuration
+public class BatchConfiguration {
 
+    @Bean
+    public SimpleJobLauncher simpleJobLauncher(JobRepository jobRepository) {
+        SimpleJobLauncher launcher = new SimpleJobLauncher();
+        launcher.setJobRepository(jobRepository);
+        return launcher;
+    }
 }

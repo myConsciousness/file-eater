@@ -19,7 +19,10 @@ import java.io.File;
 import com.mongodb.lang.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
+import org.thinkit.bot.filater.catalog.Delimiter;
 import org.thinkit.bot.filater.config.FileDeleteConfig;
+import org.thinkit.bot.filater.result.FileDeleteResult;
+import org.thinkit.bot.filater.util.DateUtils;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -31,7 +34,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(staticName = "from")
-public final class FileDeleteCommand extends AbstractBotCommand<String> {
+public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteResult> {
 
     /**
      * The file delete config
@@ -39,12 +42,16 @@ public final class FileDeleteCommand extends AbstractBotCommand<String> {
     private FileDeleteConfig fileDeleteConfig;
 
     @Override
-    public String executeBotProcess() {
-        this.deleteFileRecursively(new File(this.fileDeleteConfig.getDirectoryPath()));
-        return "";
+    public FileDeleteResult executeBotProcess() {
+
+        final FileDeleteResult.FileDeleteResultBuilder fileDeleteResultBuilder = FileDeleteResult.builder();
+        this.deleteFileRecursively(new File(this.fileDeleteConfig.getDirectoryPath()), fileDeleteResultBuilder);
+
+        return fileDeleteResultBuilder.build();
     }
 
-    private void deleteFileRecursively(@NonNull final File file) {
+    private void deleteFileRecursively(@NonNull final File file,
+            FileDeleteResult.FileDeleteResultBuilder fileDeleteResultBuilder) {
 
         if (!file.exists()) {
             return;
@@ -52,12 +59,17 @@ public final class FileDeleteCommand extends AbstractBotCommand<String> {
 
         if (file.isDirectory()) {
             for (final File childFile : file.listFiles()) {
-                this.deleteFileRecursively(childFile);
+                this.deleteFileRecursively(childFile, fileDeleteResultBuilder);
             }
         }
 
-        if (this.isTargetExtension(file)) {
-            file.delete();
+        if (this.isExpiredFile(file) && this.isTargetExtension(file)) {
+
+            fileDeleteResultBuilder.size(fileDeleteResultBuilder.getSize() + file.length());
+
+            if (file.delete()) {
+                fileDeleteResultBuilder.count(fileDeleteResultBuilder.getCount() + 1);
+            }
         }
     }
 
@@ -66,6 +78,7 @@ public final class FileDeleteCommand extends AbstractBotCommand<String> {
         final String targetExtension = this.fileDeleteConfig.getExtension();
 
         if (StringUtils.isEmpty(targetExtension)) {
+            // If the target extension is empty, all extensions will be targeted.
             return true;
         }
 
@@ -75,11 +88,16 @@ public final class FileDeleteCommand extends AbstractBotCommand<String> {
     private String getFileExtension(@NonNull final File file) {
 
         final String fileName = file.getName();
+        final String dotDelimiter = Delimiter.DOT.getTag();
 
-        if (!fileName.contains(".")) {
+        if (!fileName.contains(dotDelimiter)) {
             return "";
         }
 
-        return fileName.substring(fileName.indexOf(".") + 1);
+        return fileName.substring(fileName.indexOf(dotDelimiter) + 1);
+    }
+
+    private boolean isExpiredFile(@NonNull final File file) {
+        return DateUtils.toDate(file.lastModified()).before(DateUtils.getNow());
     }
 }

@@ -12,15 +12,36 @@
  * the License.
  */
 
-package org.thinkit.bot.filater;
+package org.thinkit.bot.filater.catalog;
 
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.thinkit.api.catalog.BiCatalog;
 
-@ToString
-@EqualsAndHashCode(callSuper = false)
-@NoArgsConstructor(staticName = "newInstance")
-public final class Filater extends AbstractFileDeleter {
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+/**
+ * The catalog that manages delimiter.
+ *
+ * @author Kato Shinya
+ * @since 1.0.0
+ */
+@RequiredArgsConstructor
+public enum Delimiter implements BiCatalog<Delimiter, String> {
+
+    /**
+     * The dot
+     */
+    DOT(0, ".");
+
+    /**
+     * The code
+     */
+    @Getter
+    private final int code;
+
+    /**
+     * The tag
+     */
+    @Getter
+    private final String tag;
 }

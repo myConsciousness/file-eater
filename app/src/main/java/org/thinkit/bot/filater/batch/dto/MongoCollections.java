@@ -12,15 +12,25 @@
  * the License.
  */
 
-package org.thinkit.bot.filater;
+package org.thinkit.bot.filater.batch.dto;
 
+import java.io.Serializable;
+
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * The class that manages collections of MongoDB.
+ *
+ * @author Kato Shinya
+ * @since 1.0.0
+ */
 @ToString
-@EqualsAndHashCode(callSuper = false)
-@NoArgsConstructor(staticName = "newInstance")
-public final class Filater extends AbstractFileDeleter {
+@EqualsAndHashCode
+@Builder(toBuilder = true)
+// @NoArgsConstructor(access = AccessLevel.PRIVATE)
+// @AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class MongoCollections implements Serializable {
 
 }

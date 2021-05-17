@@ -12,36 +12,36 @@
  * the License.
  */
 
-package org.thinkit.bot.filater.batch.dto;
+package org.thinkit.bot.filater.batch.catalog;
 
-import java.io.Serializable;
+import org.thinkit.api.catalog.BiCatalog;
 
-import org.thinkit.bot.filater.batch.data.repository.FileDeleteRuleRepository;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.RequiredArgsConstructor;
 
 /**
- * The class that manages collections of MongoDB.
+ * The catalog that manages mongo database.
  *
  * @author Kato Shinya
  * @since 1.0.0
  */
-@ToString
-@EqualsAndHashCode
-@Builder(toBuilder = true)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class MongoCollections implements Serializable {
+@RequiredArgsConstructor
+public enum MongoDatabase implements BiCatalog<MongoDatabase, String> {
 
     /**
-     * The file delete rule repository
+     * The filater
+     */
+    FILATER(0, "filater");
+
+    /**
+     * The code
      */
     @Getter
-    private FileDeleteRuleRepository fileDeleteRuleRepository;
+    private final int code;
+
+    /**
+     * The tag
+     */
+    @Getter
+    private final String tag;
 }

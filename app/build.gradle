@@ -58,10 +58,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
-	implementation 'org.projectlombok:lombok:1.18.18'
-	annotationProcessor 'org.projectlombok:lombok:1.18.18'
-	testImplementation 'org.projectlombok:lombok:1.18.16'
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
+	implementation 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+	testImplementation 'org.projectlombok:lombok:1.18.20'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
 
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 

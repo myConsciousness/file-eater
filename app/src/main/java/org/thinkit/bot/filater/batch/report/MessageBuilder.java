@@ -12,35 +12,9 @@
  * the License.
  */
 
-package org.thinkit.bot.filater.catalog;
+package org.thinkit.bot.filater.batch.report;
 
-import org.thinkit.api.catalog.Catalog;
+public interface MessageBuilder {
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-/**
- * The catalog that manages task type.
- *
- * @author Kato Shinya
- * @since 1.0.0
- */
-@RequiredArgsConstructor
-public enum TaskType implements Catalog<TaskType> {
-
-    /**
-     * The delete file
-     */
-    DELETE_FILE(0),
-
-    /**
-     * The notify resutlt report
-     */
-    NOTIFY_RESULT_REPORT(900);
-
-    /**
-     * The code
-     */
-    @Getter
-    private final int code;
+    public String build();
 }

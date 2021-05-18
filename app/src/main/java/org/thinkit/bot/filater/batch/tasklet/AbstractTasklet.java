@@ -26,6 +26,7 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
+import org.thinkit.bot.filater.FileDeleter;
 import org.thinkit.bot.filater.batch.data.entity.ActionRecord;
 import org.thinkit.bot.filater.batch.data.entity.Error;
 import org.thinkit.bot.filater.batch.data.entity.LastAction;
@@ -60,6 +61,10 @@ public abstract class AbstractTasklet implements Tasklet {
      * The batch task
      */
     private final BatchTask batchTask;
+
+    @Autowired
+    @Getter(AccessLevel.PROTECTED)
+    private FileDeleter fileDeleter;
 
     /**
      * The configurable application context

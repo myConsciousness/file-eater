@@ -12,35 +12,71 @@
  * the License.
  */
 
-package org.thinkit.bot.filater.catalog;
+package org.thinkit.bot.filater.batch.catalog;
 
-import org.thinkit.api.catalog.Catalog;
+import org.thinkit.api.catalog.BiCatalog;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * The catalog that manages task type.
+ * The catalog that manages error http status.
  *
  * @author Kato Shinya
  * @since 1.0.0
  */
 @RequiredArgsConstructor
-public enum TaskType implements Catalog<TaskType> {
+public enum ErrorHttpStatus implements BiCatalog<ErrorHttpStatus, Integer> {
 
     /**
-     * The delete file
+     * Bad Request
      */
-    DELETE_FILE(0),
+    BAD_REQUEST(0, 400),
 
     /**
-     * The notify resutlt report
+     * Unauthorized
      */
-    NOTIFY_RESULT_REPORT(900);
+    UNAUTHORIZED(1, 401),
+
+    /**
+     * Forbidden
+     */
+    FORBIDDEN(2, 403),
+
+    /**
+     * Not found
+     */
+    NOT_FOUND(3, 404),
+
+    /**
+     * Not acceptable
+     */
+    NOT_ACCEPTABLE(4, 406),
+
+    /**
+     * Internal server error
+     */
+    INTERNAL_SERVER_ERROR(5, 500),
+
+    /**
+     * Bad gateway
+     */
+    BAD_GATEWAY(6, 502),
+
+    /**
+     * Service unavailable
+     */
+    SERVICE_UNAVAILABLE(7, 503);
 
     /**
      * The code
      */
     @Getter
     private final int code;
+
+    /**
+     * The tag
+     */
+    @Getter
+    private final Integer tag;
 }

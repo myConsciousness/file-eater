@@ -12,35 +12,36 @@
  * the License.
  */
 
-package org.thinkit.bot.filater.catalog;
+package org.thinkit.bot.filater.batch.catalog;
 
-import org.thinkit.api.catalog.Catalog;
+import org.thinkit.api.catalog.BiCatalog;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * The catalog that manages task type.
+ * The catalog that manages content type.
  *
  * @author Kato Shinya
  * @since 1.0.0
  */
 @RequiredArgsConstructor
-public enum TaskType implements Catalog<TaskType> {
+public enum ContentType implements BiCatalog<ContentType, String> {
 
     /**
-     * The delete file
+     * {@code "application/x-www-form-urlencoded"}
      */
-    DELETE_FILE(0),
-
-    /**
-     * The notify resutlt report
-     */
-    NOTIFY_RESULT_REPORT(900);
+    APPLICATION_X_WWWW_FORM_URLENCODED(0, "application/x-www-form-urlencoded");
 
     /**
      * The code
      */
     @Getter
     private final int code;
+
+    /**
+     * The tag
+     */
+    @Getter
+    private final String tag;
 }

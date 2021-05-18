@@ -33,7 +33,7 @@ public class BatchStepConfiguration {
     private StepBuilderFactory stepBuilderFactory;
 
     /**
-     * The delete file tasklet
+     * The execute delete file tasklet
      */
     @Autowired
     private Tasklet executeDeleteFileTasklet;

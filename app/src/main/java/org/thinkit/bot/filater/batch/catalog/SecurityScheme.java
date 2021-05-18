@@ -12,35 +12,36 @@
  * the License.
  */
 
-package org.thinkit.bot.filater.catalog;
+package org.thinkit.bot.filater.batch.catalog;
 
-import org.thinkit.api.catalog.Catalog;
+import org.thinkit.api.catalog.BiCatalog;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * The catalog that manages task type.
+ * The catalog that manages security scheme.
  *
  * @author Kato Shinya
  * @since 1.0.0
  */
 @RequiredArgsConstructor
-public enum TaskType implements Catalog<TaskType> {
+public enum SecurityScheme implements BiCatalog<SecurityScheme, String> {
 
     /**
-     * The delete file
+     * The {@code "Bearer"} scheme
      */
-    DELETE_FILE(0),
-
-    /**
-     * The notify resutlt report
-     */
-    NOTIFY_RESULT_REPORT(900);
+    BEARER(0, "Bearer");
 
     /**
      * The code
      */
     @Getter
     private final int code;
+
+    /**
+     * The tag
+     */
+    @Getter
+    private final String tag;
 }

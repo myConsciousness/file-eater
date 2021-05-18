@@ -12,35 +12,36 @@
  * the License.
  */
 
-package org.thinkit.bot.filater.catalog;
+package org.thinkit.bot.filater.batch.catalog;
 
-import org.thinkit.api.catalog.Catalog;
+import org.thinkit.api.catalog.BiCatalog;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * The catalog that manages task type.
+ * The catalog that manages line notify parameter.
  *
  * @author Kato Shinya
  * @since 1.0.0
  */
 @RequiredArgsConstructor
-public enum TaskType implements Catalog<TaskType> {
+public enum LineNotifyParameter implements BiCatalog<LineNotifyParameter, String> {
 
     /**
-     * The delete file
+     * The message
      */
-    DELETE_FILE(0),
-
-    /**
-     * The notify resutlt report
-     */
-    NOTIFY_RESULT_REPORT(900);
+    MESSAGE(0, "message");
 
     /**
      * The code
      */
     @Getter
     private final int code;
+
+    /**
+     * The tag
+     */
+    @Getter
+    private final String tag;
 }

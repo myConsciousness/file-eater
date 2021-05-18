@@ -98,7 +98,8 @@ public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteResult
     }
 
     private boolean isExpiredFile(@NonNull final File file) {
-        return DateUtils.toDate(file.lastModified()).before(DateUtils.getNow());
+        return DateUtils.getDateAfter(file.lastModified(), this.fileDeleteConfig.getPeriodDays())
+                .before(DateUtils.getNow());
     }
 
     private String normalizeString(@NonNull final String string) {

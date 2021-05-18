@@ -16,7 +16,10 @@ package org.thinkit.bot.filater.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+
+import com.mongodb.lang.NonNull;
 
 import org.thinkit.bot.filater.catalog.DateFormat;
 
@@ -34,6 +37,22 @@ public final class DateUtils {
 
     public static Date getNow() {
         return new Date();
+    }
+
+    public static Date getDateAfter(final long timeMs, final int days) {
+        final Calendar baseDate = Calendar.getInstance();
+        baseDate.setTime(toDate(timeMs));
+        baseDate.add(Calendar.DATE, days);
+
+        return toDate(baseDate.getTime().getTime());
+    }
+
+    public static Date getDateAfter(@NonNull final Date date, final int days) {
+        final Calendar baseDate = Calendar.getInstance();
+        baseDate.setTime(date);
+        baseDate.add(Calendar.DATE, days);
+
+        return toDate(baseDate.getTime().getTime());
     }
 
     public static Date toDate(final long timeMs) {

@@ -21,7 +21,7 @@ import com.mongodb.lang.NonNull;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.thinkit.bot.filater.Filater;
+import org.springframework.stereotype.Component;
 import org.thinkit.bot.filater.FileDeleter;
 import org.thinkit.bot.filater.batch.data.entity.FileDeleteRule;
 import org.thinkit.bot.filater.batch.data.repository.FileDeleteRuleRepository;
@@ -42,29 +42,30 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @ToString
 @EqualsAndHashCode(callSuper = false)
-public final class ExecuteFileDeleteTasklet extends AbstractTasklet {
+@Component
+public final class ExecuteDeleteFileTasklet extends AbstractTasklet {
 
     /**
      * The constructor.
      */
-    private ExecuteFileDeleteTasklet() {
+    private ExecuteDeleteFileTasklet() {
         super(TaskType.DELETE_FILE);
     }
 
     /**
-     * Returns the new instance of {@link ExecuteFileDeleteTasklet} .
+     * Returns the new instance of {@link ExecuteDeleteFileTasklet} .
      *
-     * @return The new instance of {@link ExecuteFileDeleteTasklet}
+     * @return The new instance of {@link ExecuteDeleteFileTasklet}
      */
     public static Tasklet newInstance() {
-        return new ExecuteFileDeleteTasklet();
+        return new ExecuteDeleteFileTasklet();
     }
 
     @Override
     protected BatchTaskResult executeTask(StepContribution contribution, ChunkContext chunkContext) {
         log.debug("START");
 
-        final FileDeleter fileDeleter = Filater.newInstance();
+        final FileDeleter fileDeleter = super.getFileDeleter();
 
         final FileDeleteRuleRepository fileDeleteRuleRepository = super.getMongoCollections()
                 .getFileDeleteRuleRepository();
@@ -75,7 +76,7 @@ public final class ExecuteFileDeleteTasklet extends AbstractTasklet {
         }
 
         log.debug("END");
-        return null;
+        return BatchTaskResult.builder().build();
     }
 
     private FileDeleteConfig getFileDeleteConfig(@NonNull final FileDeleteRule fileDeleteRule) {

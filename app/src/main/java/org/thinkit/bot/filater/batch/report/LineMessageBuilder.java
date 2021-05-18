@@ -12,35 +12,29 @@
  * the License.
  */
 
-package org.thinkit.bot.filater.catalog;
+package org.thinkit.bot.filater.batch.report;
 
-import org.thinkit.api.catalog.Catalog;
+import org.thinkit.bot.filater.batch.dto.MongoCollections;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-/**
- * The catalog that manages task type.
- *
- * @author Kato Shinya
- * @since 1.0.0
- */
-@RequiredArgsConstructor
-public enum TaskType implements Catalog<TaskType> {
-
-    /**
-     * The delete file
-     */
-    DELETE_FILE(0),
+@ToString
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(staticName = "from")
+public final class LineMessageBuilder implements MessageBuilder {
 
     /**
-     * The notify resutlt report
+     * The mongo collections
      */
-    NOTIFY_RESULT_REPORT(900);
+    private MongoCollections mongoCollections;
 
-    /**
-     * The code
-     */
-    @Getter
-    private final int code;
+    @Override
+    public String build() {
+        return "";
+    }
 }

@@ -19,7 +19,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.thinkit.bot.filater.batch.catalog.MongoDatabase;
+import org.thinkit.bot.filater.batch.data.repository.ActionRecordRepository;
+import org.thinkit.bot.filater.batch.data.repository.ErrorRepository;
 import org.thinkit.bot.filater.batch.data.repository.FileDeleteRuleRepository;
+import org.thinkit.bot.filater.batch.data.repository.LastActionRepository;
 import org.thinkit.bot.filater.batch.dto.MongoCollections;
 
 /**
@@ -37,6 +40,24 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
     @Autowired
     private FileDeleteRuleRepository fileDeleteRuleRepository;
 
+    /**
+     * The last action repository
+     */
+    @Autowired
+    private LastActionRepository lastActionRepository;
+
+    /**
+     * The action record repository
+     */
+    @Autowired
+    private ActionRecordRepository actionRecordRepository;
+
+    /**
+     * The error repository
+     */
+    @Autowired
+    private ErrorRepository errorRepository;
+
     @Override
     protected String getDatabaseName() {
         return MongoDatabase.FILATER.getTag();
@@ -51,6 +72,9 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
     public MongoCollections mongoCollections() {
         final MongoCollections.MongoCollectionsBuilder mongoCollectionsBuilder = MongoCollections.builder();
         mongoCollectionsBuilder.fileDeleteRuleRepository(this.fileDeleteRuleRepository);
+        mongoCollectionsBuilder.lastActionRepository(this.lastActionRepository);
+        mongoCollectionsBuilder.actionRecordRepository(this.actionRecordRepository);
+        mongoCollectionsBuilder.errorRepository(this.errorRepository);
 
         return mongoCollectionsBuilder.build();
     }

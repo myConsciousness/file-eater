@@ -12,14 +12,16 @@
  * the License.
  */
 
-package org.thinkit.bot.filater.batch.dto;
+package org.thinkit.bot.filater.batch.result;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.thinkit.bot.filater.batch.data.repository.ActionRecordRepository;
-import org.thinkit.bot.filater.batch.data.repository.ErrorRepository;
-import org.thinkit.bot.filater.batch.data.repository.FileDeleteRuleRepository;
-import org.thinkit.bot.filater.batch.data.repository.LastActionRepository;
+import com.mongodb.lang.NonNull;
+
+import org.springframework.batch.repeat.RepeatStatus;
+import org.thinkit.bot.filater.result.ActionError;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -30,7 +32,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * The class that manages collections of MongoDB.
+ * The class that manages the result of batch task.
  *
  * @author Kato Shinya
  * @since 1.0.0
@@ -40,29 +42,33 @@ import lombok.ToString;
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class MongoCollections implements Serializable {
+public final class BatchTaskResult implements Serializable {
 
     /**
-     * The file delete rule repository
+     * The action count
      */
     @Getter
-    private FileDeleteRuleRepository fileDeleteRuleRepository;
+    private int actionCount;
 
     /**
-     * The last action repository
+     * The result count
      */
     @Getter
-    private LastActionRepository lastActionRepository;
+    private int resultCount;
 
     /**
-     * The action record repository
+     * The repeat status
      */
     @Getter
-    private ActionRecordRepository actionRecordRepository;
+    @NonNull
+    @Builder.Default
+    private RepeatStatus repeatStatus = RepeatStatus.FINISHED;
 
     /**
-     * The error repository
+     * The action errors
      */
     @Getter
-    private ErrorRepository errorRepository;
+    @NonNull
+    @Builder.Default
+    private List<ActionError> actionErrors = new ArrayList<>(0);
 }

@@ -12,14 +12,11 @@
  * the License.
  */
 
-package org.thinkit.bot.filater.batch.dto;
+package org.thinkit.bot.filater.result;
 
 import java.io.Serializable;
 
-import org.thinkit.bot.filater.batch.data.repository.ActionRecordRepository;
-import org.thinkit.bot.filater.batch.data.repository.ErrorRepository;
-import org.thinkit.bot.filater.batch.data.repository.FileDeleteRuleRepository;
-import org.thinkit.bot.filater.batch.data.repository.LastActionRepository;
+import org.thinkit.bot.filater.catalog.TaskType;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -30,7 +27,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * The class that manages collections of MongoDB.
+ * The class that manages action error.
  *
  * @author Kato Shinya
  * @since 1.0.0
@@ -40,29 +37,29 @@ import lombok.ToString;
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class MongoCollections implements Serializable {
+public final class ActionError implements Serializable {
 
     /**
-     * The file delete rule repository
+     * The task type
      */
     @Getter
-    private FileDeleteRuleRepository fileDeleteRuleRepository;
+    private TaskType taskType;
 
     /**
-     * The last action repository
+     * The message
      */
     @Getter
-    private LastActionRepository lastActionRepository;
+    private String message;
 
     /**
-     * The action record repository
+     * The localized message
      */
     @Getter
-    private ActionRecordRepository actionRecordRepository;
+    private String localizedMessage;
 
     /**
-     * The error repository
+     * The stack trace
      */
     @Getter
-    private ErrorRepository errorRepository;
+    private String stackTrace;
 }

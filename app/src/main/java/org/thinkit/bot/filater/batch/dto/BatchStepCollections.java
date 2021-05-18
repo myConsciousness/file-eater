@@ -40,10 +40,10 @@ import lombok.ToString;
 public final class BatchStepCollections implements Serializable {
 
     /**
-     * The delete file step
+     * The execute delete file step
      */
     @Getter
-    private Step deleteFileStep;
+    private Step executeDeleteFileStep;
 
     /**
      * The notify result report step

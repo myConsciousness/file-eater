@@ -50,8 +50,8 @@ public final class FileDeleteConfig implements Serializable {
     private String extension;
 
     /**
-     * The elapsed days
+     * The period days
      */
     @Getter
-    private int elapsedDays;
+    private int periodDays;
 }

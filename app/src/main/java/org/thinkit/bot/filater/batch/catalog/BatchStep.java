@@ -29,12 +29,12 @@ import lombok.RequiredArgsConstructor;
 public enum BatchStep implements BiCatalog<BatchStep, String> {
 
     /**
-     * The delete file
+     * The execute delete file step
      */
-    DELETE_FILE(0, "DeleteFile"),
+    EXECUTE_DELETE_FILE(0, "ExecuteDeleteFile"),
 
     /**
-     * The notify result report
+     * The notify result report step
      */
     NOTIFY_RESULT_REPORT(900, "NotifyResultReport");
 

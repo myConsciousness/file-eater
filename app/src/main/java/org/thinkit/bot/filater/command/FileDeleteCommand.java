@@ -75,7 +75,7 @@ public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteResult
 
     private boolean isTargetExtension(@NonNull final File file) {
 
-        final String targetExtension = this.fileDeleteConfig.getExtension();
+        final String targetExtension = this.normalizeString(this.fileDeleteConfig.getExtension());
 
         if (StringUtils.isEmpty(targetExtension)) {
             // If the target extension is empty, all extensions will be targeted.
@@ -94,10 +94,14 @@ public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteResult
             return "";
         }
 
-        return fileName.substring(fileName.indexOf(dotDelimiter) + 1);
+        return this.normalizeString(fileName.substring(fileName.indexOf(dotDelimiter) + 1));
     }
 
     private boolean isExpiredFile(@NonNull final File file) {
         return DateUtils.toDate(file.lastModified()).before(DateUtils.getNow());
+    }
+
+    private String normalizeString(@NonNull final String string) {
+        return string.toLowerCase().trim();
     }
 }

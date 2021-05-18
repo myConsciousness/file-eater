@@ -91,7 +91,7 @@ public class BatchJobConfiguration {
     }
 
     private FlowBuilder<FlowJobBuilder> createDeleteFileJobFlowBuilder() {
-        return this.getFilaterBotJobBuilder().flow(batchStepCollections.getDeleteFileStep())
+        return this.getFilaterBotJobBuilder().flow(batchStepCollections.getExecuteDeleteFileStep())
                 .next(batchStepCollections.getNotifyResultReportStep());
     }
 

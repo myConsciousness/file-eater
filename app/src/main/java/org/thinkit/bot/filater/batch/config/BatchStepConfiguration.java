@@ -36,7 +36,7 @@ public class BatchStepConfiguration {
      * The delete file tasklet
      */
     @Autowired
-    private Tasklet deleteFileTasklet;
+    private Tasklet executeDeleteFileTasklet;
 
     /**
      * The notify result report tasklet
@@ -48,14 +48,15 @@ public class BatchStepConfiguration {
     public BatchStepCollections batchStepCollections() {
         final BatchStepCollections.BatchStepCollectionsBuilder batchStepCollectionsBuilder = BatchStepCollections
                 .builder();
-        batchStepCollectionsBuilder.deleteFileStep(this.deleteFileStep());
-        batchStepCollectionsBuilder.deleteFileStep(this.notifyResultReportStep());
+        batchStepCollectionsBuilder.executeDeleteFileStep(this.executeDeleteFileStep());
+        batchStepCollectionsBuilder.notifyResultReportStep(this.notifyResultReportStep());
 
         return batchStepCollectionsBuilder.build();
     }
 
-    private Step deleteFileStep() {
-        return this.stepBuilderFactory.get(BatchStep.DELETE_FILE.getTag()).tasklet(this.deleteFileTasklet).build();
+    private Step executeDeleteFileStep() {
+        return this.stepBuilderFactory.get(BatchStep.EXECUTE_DELETE_FILE.getTag())
+                .tasklet(this.executeDeleteFileTasklet).build();
     }
 
     private Step notifyResultReportStep() {

@@ -18,6 +18,8 @@ import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.stereotype.Component;
+import org.thinkit.api.line.factory.LineApiJFactory;
+import org.thinkit.bot.filater.batch.report.LineMessageBuilder;
 import org.thinkit.bot.filater.batch.result.BatchTaskResult;
 import org.thinkit.bot.filater.catalog.TaskType;
 
@@ -50,6 +52,9 @@ public final class NotifyResultReportTasklet extends AbstractTasklet {
     @Override
     protected BatchTaskResult executeTask(StepContribution contribution, ChunkContext chunkContext) {
         log.debug("START");
+
+        LineApiJFactory.getInstance().createLineNotify("")
+                .sendMessage(LineMessageBuilder.from(super.getMongoCollections()).build());
 
         log.debug("END");
         return BatchTaskResult.builder().build();

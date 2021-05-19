@@ -14,24 +14,26 @@
 
 package org.thinkit.bot.filater.batch.data.repository;
 
+import com.mongodb.lang.NonNull;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import org.thinkit.bot.filater.batch.data.entity.LastAction;
+import org.thinkit.bot.filater.batch.data.entity.Variable;
 
 /**
- * The interface that manages last action repository.
+ * The interface that manages variable repository.
  *
  * @author Kato Shinya
  * @since 1.0.0
  */
 @Repository
-public interface LastActionRepository extends MongoRepository<LastAction, String> {
+public interface VariableRepository extends MongoRepository<Variable, String> {
 
     /**
-     * Returns the last action based on the task type code passed as an argument.
+     * Returns the variable based on the name passed as an argument.
      *
-     * @param taskTypeCode The task type code
-     * @return The last action linked to the task type code passed as an argument.
+     * @param name The name
+     * @return The variable linked to the name passed as an argument
      */
-    public LastAction findByTaskTypeCode(int taskTypeCode);
+    public Variable findByName(@NonNull final String name);
 }

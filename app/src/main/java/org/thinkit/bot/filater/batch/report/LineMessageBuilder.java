@@ -35,6 +35,6 @@ public final class LineMessageBuilder implements MessageBuilder {
 
     @Override
     public String build() {
-        return "";
+        return "TEST";
     }
 }

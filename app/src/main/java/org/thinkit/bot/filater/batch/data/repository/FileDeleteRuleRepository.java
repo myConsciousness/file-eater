@@ -26,5 +26,4 @@ import org.thinkit.bot.filater.batch.data.entity.FileDeleteRule;
  */
 @Repository
 public interface FileDeleteRuleRepository extends MongoRepository<FileDeleteRule, String> {
-
 }

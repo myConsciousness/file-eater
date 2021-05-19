@@ -20,6 +20,7 @@ import org.thinkit.bot.filater.batch.data.repository.ActionRecordRepository;
 import org.thinkit.bot.filater.batch.data.repository.ErrorRepository;
 import org.thinkit.bot.filater.batch.data.repository.FileDeleteRuleRepository;
 import org.thinkit.bot.filater.batch.data.repository.LastActionRepository;
+import org.thinkit.bot.filater.batch.data.repository.VariableRepository;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -65,4 +66,10 @@ public class MongoCollections implements Serializable {
      */
     @Getter
     private ErrorRepository errorRepository;
+
+    /**
+     * The variable repository
+     */
+    @Getter
+    private VariableRepository variableRepository;
 }

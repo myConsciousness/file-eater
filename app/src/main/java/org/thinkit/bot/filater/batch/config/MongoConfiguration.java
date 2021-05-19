@@ -23,6 +23,7 @@ import org.thinkit.bot.filater.batch.data.repository.ActionRecordRepository;
 import org.thinkit.bot.filater.batch.data.repository.ErrorRepository;
 import org.thinkit.bot.filater.batch.data.repository.FileDeleteRuleRepository;
 import org.thinkit.bot.filater.batch.data.repository.LastActionRepository;
+import org.thinkit.bot.filater.batch.data.repository.VariableRepository;
 import org.thinkit.bot.filater.batch.dto.MongoCollections;
 
 /**
@@ -58,6 +59,12 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
     @Autowired
     private ErrorRepository errorRepository;
 
+    /**
+     * The variable repository
+     */
+    @Autowired
+    private VariableRepository variableRepository;
+
     @Override
     protected String getDatabaseName() {
         return MongoDatabase.FILATER.getTag();
@@ -75,6 +82,7 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
         mongoCollectionsBuilder.lastActionRepository(this.lastActionRepository);
         mongoCollectionsBuilder.actionRecordRepository(this.actionRecordRepository);
         mongoCollectionsBuilder.errorRepository(this.errorRepository);
+        mongoCollectionsBuilder.variableRepository(this.variableRepository);
 
         return mongoCollectionsBuilder.build();
     }

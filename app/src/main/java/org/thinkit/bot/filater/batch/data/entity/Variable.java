@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2021 Kato Shinya.
  *
@@ -12,26 +13,47 @@
  * the License.
  */
 
-package org.thinkit.bot.filater.batch.data.repository;
+package org.thinkit.bot.filater.batch.data.entity;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
-import org.thinkit.bot.filater.batch.data.entity.LastAction;
+import java.io.Serializable;
+import java.util.Date;
+
+import org.springframework.data.annotation.Id;
+
+import lombok.Data;
 
 /**
- * The interface that manages last action repository.
+ * The entity that manages variable.
  *
  * @author Kato Shinya
  * @since 1.0.0
  */
-@Repository
-public interface LastActionRepository extends MongoRepository<LastAction, String> {
+@Data
+public final class Variable implements Serializable {
 
     /**
-     * Returns the last action based on the task type code passed as an argument.
-     *
-     * @param taskTypeCode The task type code
-     * @return The last action linked to the task type code passed as an argument.
+     * The id
      */
-    public LastAction findByTaskTypeCode(int taskTypeCode);
+    @Id
+    private String id;
+
+    /**
+     * The name
+     */
+    private String name;
+
+    /**
+     * The value
+     */
+    private String value;
+
+    /**
+     * The created datetime
+     */
+    private Date createdAt = new Date();
+
+    /**
+     * The updated datetime
+     */
+    private Date updatedAt = new Date();
 }

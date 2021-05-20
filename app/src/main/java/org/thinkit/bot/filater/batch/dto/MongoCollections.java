@@ -18,6 +18,7 @@ import java.io.Serializable;
 
 import org.thinkit.bot.filater.batch.data.repository.ActionRecordRepository;
 import org.thinkit.bot.filater.batch.data.repository.ErrorRepository;
+import org.thinkit.bot.filater.batch.data.repository.FileDeleteResultRepository;
 import org.thinkit.bot.filater.batch.data.repository.FileDeleteRuleRepository;
 import org.thinkit.bot.filater.batch.data.repository.LastActionRepository;
 import org.thinkit.bot.filater.batch.data.repository.VariableRepository;
@@ -72,4 +73,10 @@ public class MongoCollections implements Serializable {
      */
     @Getter
     private VariableRepository variableRepository;
+
+    /**
+     * The file delete result repository
+     */
+    @Getter
+    private FileDeleteResultRepository fileDeleteResultRepository;
 }

@@ -47,6 +47,16 @@ public final class FileDeleteResult implements Serializable {
     private int taskTypeCode;
 
     /**
+     * The directory path
+     */
+    private String directoryPath;
+
+    /**
+     * The extension
+     */
+    private String extension;
+
+    /**
      * The count
      */
     private int count;
@@ -54,7 +64,7 @@ public final class FileDeleteResult implements Serializable {
     /**
      * The size
      */
-    private int size;
+    private long size;
 
     /**
      * The executed date

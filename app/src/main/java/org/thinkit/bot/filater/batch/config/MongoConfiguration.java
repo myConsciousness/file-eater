@@ -21,6 +21,7 @@ import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.thinkit.bot.filater.batch.catalog.MongoDatabase;
 import org.thinkit.bot.filater.batch.data.repository.ActionRecordRepository;
 import org.thinkit.bot.filater.batch.data.repository.ErrorRepository;
+import org.thinkit.bot.filater.batch.data.repository.FileDeleteResultRepository;
 import org.thinkit.bot.filater.batch.data.repository.FileDeleteRuleRepository;
 import org.thinkit.bot.filater.batch.data.repository.LastActionRepository;
 import org.thinkit.bot.filater.batch.data.repository.VariableRepository;
@@ -65,6 +66,12 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
     @Autowired
     private VariableRepository variableRepository;
 
+    /**
+     * The file delete result repository
+     */
+    @Autowired
+    private FileDeleteResultRepository fileDeleteResultRepository;
+
     @Override
     protected String getDatabaseName() {
         return MongoDatabase.FILATER.getTag();
@@ -83,6 +90,7 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
         mongoCollectionsBuilder.actionRecordRepository(this.actionRecordRepository);
         mongoCollectionsBuilder.errorRepository(this.errorRepository);
         mongoCollectionsBuilder.variableRepository(this.variableRepository);
+        mongoCollectionsBuilder.fileDeleteResultRepository(this.fileDeleteResultRepository);
 
         return mongoCollectionsBuilder.build();
     }

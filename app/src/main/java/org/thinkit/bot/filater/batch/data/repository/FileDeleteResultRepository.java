@@ -21,7 +21,7 @@ import org.springframework.stereotype.Repository;
 import org.thinkit.bot.filater.batch.data.entity.FileDeleteResult;
 
 @Repository
-public interface FileDeleteResultMapper extends MongoRepository<FileDeleteResult, String> {
+public interface FileDeleteResultRepository extends MongoRepository<FileDeleteResult, String> {
 
     public List<FileDeleteResult> findByTaskTypeCodeAndExecutedAt(int taskTypeCode, String executedAt);
 }

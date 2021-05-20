@@ -19,6 +19,7 @@ import java.io.File;
 import com.mongodb.lang.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
+import org.thinkit.bot.filater.catalog.DateFormat;
 import org.thinkit.bot.filater.catalog.Delimiter;
 import org.thinkit.bot.filater.config.FileDeleteConfig;
 import org.thinkit.bot.filater.result.FileDeleteCommandResult;
@@ -99,8 +100,8 @@ public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteComman
     }
 
     private boolean isExpiredFile(@NonNull final File file) {
-        return DateUtils.getDateAfter(file.lastModified(), this.fileDeleteConfig.getPeriodDays())
-                .before(DateUtils.getNow());
+        return DateUtils.getDateAfter(DateFormat.YYYY_MM_DD_HH_MM_SS, file.lastModified(),
+                this.fileDeleteConfig.getPeriodDays()).before(DateUtils.now());
     }
 
     private String normalizeString(@NonNull final String string) {

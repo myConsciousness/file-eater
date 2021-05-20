@@ -19,6 +19,12 @@ import org.thinkit.api.catalog.BiCatalog;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * The catalog that manages variable name.
+ *
+ * @author Kato Shinya
+ * @since 1.0.0
+ */
 @RequiredArgsConstructor
 public enum VariableName implements BiCatalog<VariableName, String> {
 

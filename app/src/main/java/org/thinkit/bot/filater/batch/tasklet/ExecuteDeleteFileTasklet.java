@@ -29,9 +29,11 @@ import org.thinkit.bot.filater.batch.data.repository.FileDeleteResultRepository;
 import org.thinkit.bot.filater.batch.data.repository.FileDeleteRuleRepository;
 import org.thinkit.bot.filater.batch.dto.MongoCollections;
 import org.thinkit.bot.filater.batch.result.BatchTaskResult;
+import org.thinkit.bot.filater.catalog.DateFormat;
 import org.thinkit.bot.filater.catalog.TaskType;
 import org.thinkit.bot.filater.config.FileDeleteConfig;
 import org.thinkit.bot.filater.result.FileDeleteCommandResult;
+import org.thinkit.bot.filater.util.DateUtils;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -75,6 +77,7 @@ public final class ExecuteDeleteFileTasklet extends AbstractTasklet {
         final FileDeleteRuleRepository fileDeleteRuleRepository = mongoCollections.getFileDeleteRuleRepository();
         final FileDeleteResultRepository fileDeleteResultRepository = mongoCollections.getFileDeleteResultRepository();
 
+        final String executedAt = DateUtils.toString(DateFormat.YYYY_MM_DD, DateUtils.now());
         final List<FileDeleteRule> fileDeleteRules = fileDeleteRuleRepository.findAll();
 
         for (final FileDeleteRule fileDeleteRule : fileDeleteRules) {
@@ -87,7 +90,7 @@ public final class ExecuteDeleteFileTasklet extends AbstractTasklet {
             fileDeleteResult.setExtension(fileDeleteRule.getExtension());
             fileDeleteResult.setCount(fileDeleteCommandResult.getCount());
             fileDeleteResult.setSize(fileDeleteCommandResult.getSize());
-            fileDeleteResult.setExecutedAt("");
+            fileDeleteResult.setExecutedAt(executedAt);
 
             fileDeleteResult = fileDeleteResultRepository.insert(fileDeleteResult);
             log.debug("Inserted file delete result: {}", fileDeleteResult);

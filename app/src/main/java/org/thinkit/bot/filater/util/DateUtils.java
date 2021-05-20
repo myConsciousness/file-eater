@@ -35,35 +35,39 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DateUtils {
 
-    public static Date getNow() {
+    public static Date now() {
         return new Date();
     }
 
-    public static Date getDateAfter(final long timeMs, final int days) {
+    public static Date getDateAfter(@NonNull final DateFormat dateFormat, final long timeMs, final int days) {
         final Calendar baseDate = Calendar.getInstance();
-        baseDate.setTime(toDate(timeMs));
+        baseDate.setTime(toDate(dateFormat, timeMs));
         baseDate.add(Calendar.DATE, days);
 
-        return toDate(baseDate.getTime().getTime());
+        return toDate(dateFormat, baseDate.getTime().getTime());
     }
 
-    public static Date getDateAfter(@NonNull final Date date, final int days) {
+    public static Date getDateAfter(@NonNull final DateFormat dateFormat, @NonNull final Date date, final int days) {
         final Calendar baseDate = Calendar.getInstance();
         baseDate.setTime(date);
         baseDate.add(Calendar.DATE, days);
 
-        return toDate(baseDate.getTime().getTime());
+        return toDate(dateFormat, baseDate.getTime().getTime());
     }
 
-    public static Date toDate(final long timeMs) {
+    public static Date toDate(@NonNull final DateFormat dateFormat, final long timeMs) {
         try {
-            return new SimpleDateFormat(DateFormat.YYYY_MM_DD_HH_MM_SS.getTag()).parse(toString(timeMs));
+            return new SimpleDateFormat(DateFormat.YYYY_MM_DD_HH_MM_SS.getTag()).parse(toString(dateFormat, timeMs));
         } catch (ParseException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    private static String toString(final long timeMs) {
-        return new SimpleDateFormat(DateFormat.YYYY_MM_DD_HH_MM_SS.getTag()).format(timeMs);
+    public static String toString(@NonNull final DateFormat dateFormat, final Date date) {
+        return toString(dateFormat, date.getTime());
+    }
+
+    private static String toString(@NonNull final DateFormat dateFormat, final long timeMs) {
+        return new SimpleDateFormat(dateFormat.getTag()).format(timeMs);
     }
 }

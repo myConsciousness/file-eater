@@ -18,7 +18,7 @@ import com.mongodb.lang.NonNull;
 
 import org.thinkit.bot.filater.command.FileDeleteCommand;
 import org.thinkit.bot.filater.config.FileDeleteConfig;
-import org.thinkit.bot.filater.result.FileDeleteResult;
+import org.thinkit.bot.filater.result.FileDeleteCommandResult;
 
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -38,7 +38,7 @@ import lombok.ToString;
 public final class Filater implements FileDeleter {
 
     @Override
-    public FileDeleteResult executeFileDelete(@NonNull final FileDeleteConfig fileDeleteConfig) {
+    public FileDeleteCommandResult executeFileDelete(@NonNull final FileDeleteConfig fileDeleteConfig) {
         return FileDeleteCommand.from(fileDeleteConfig).execute();
     }
 }

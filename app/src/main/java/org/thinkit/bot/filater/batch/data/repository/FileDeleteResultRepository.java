@@ -12,36 +12,16 @@
  * the License.
  */
 
-package org.thinkit.bot.filater.batch.catalog;
+package org.thinkit.bot.filater.batch.data.repository;
 
-import org.thinkit.api.catalog.BiCatalog;
+import java.util.List;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+import org.thinkit.bot.filater.batch.data.entity.FileDeleteResult;
 
-/**
- * The catalog that manages security scheme.
- *
- * @author Kato Shinya
- * @since 1.0.0
- */
-@RequiredArgsConstructor
-public enum SecurityScheme implements BiCatalog<SecurityScheme, String> {
+@Repository
+public interface FileDeleteResultRepository extends MongoRepository<FileDeleteResult, String> {
 
-    /**
-     * The {@code "Bearer"} scheme
-     */
-    BEARER(0, "Bearer");
-
-    /**
-     * The code
-     */
-    @Getter
-    private final int code;
-
-    /**
-     * The tag
-     */
-    @Getter
-    private final String tag;
+    public List<FileDeleteResult> findByTaskTypeCodeAndExecutedAt(int taskTypeCode, String executedAt);
 }

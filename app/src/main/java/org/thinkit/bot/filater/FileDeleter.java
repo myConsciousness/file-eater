@@ -17,7 +17,7 @@ package org.thinkit.bot.filater;
 import com.mongodb.lang.NonNull;
 
 import org.thinkit.bot.filater.config.FileDeleteConfig;
-import org.thinkit.bot.filater.result.FileDeleteResult;
+import org.thinkit.bot.filater.result.FileDeleteCommandResult;
 
 /**
  * The interface that abstracts an object that deletes files.
@@ -37,5 +37,5 @@ public interface FileDeleter {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    public FileDeleteResult executeFileDelete(@NonNull final FileDeleteConfig fileDeleteConfig);
+    public FileDeleteCommandResult executeFileDelete(@NonNull final FileDeleteConfig fileDeleteConfig);
 }

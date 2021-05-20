@@ -21,7 +21,7 @@ import com.mongodb.lang.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.thinkit.bot.filater.catalog.Delimiter;
 import org.thinkit.bot.filater.config.FileDeleteConfig;
-import org.thinkit.bot.filater.result.FileDeleteResult;
+import org.thinkit.bot.filater.result.FileDeleteCommandResult;
 import org.thinkit.bot.filater.util.DateUtils;
 
 import lombok.AccessLevel;
@@ -34,7 +34,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(staticName = "from")
-public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteResult> {
+public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteCommandResult> {
 
     /**
      * The file delete config
@@ -42,16 +42,17 @@ public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteResult
     private FileDeleteConfig fileDeleteConfig;
 
     @Override
-    public FileDeleteResult executeBotProcess() {
+    public FileDeleteCommandResult executeBotProcess() {
 
-        final FileDeleteResult.FileDeleteResultBuilder fileDeleteResultBuilder = FileDeleteResult.builder();
-        this.deleteFileRecursively(new File(this.fileDeleteConfig.getDirectoryPath()), fileDeleteResultBuilder);
+        final FileDeleteCommandResult.FileDeleteCommandResultBuilder fileDeleteCommandResultBuilder = FileDeleteCommandResult
+                .builder();
+        this.deleteFileRecursively(new File(this.fileDeleteConfig.getDirectoryPath()), fileDeleteCommandResultBuilder);
 
-        return fileDeleteResultBuilder.build();
+        return fileDeleteCommandResultBuilder.build();
     }
 
     private void deleteFileRecursively(@NonNull final File file,
-            FileDeleteResult.FileDeleteResultBuilder fileDeleteResultBuilder) {
+            FileDeleteCommandResult.FileDeleteCommandResultBuilder fileDeleteCommandResultBuilder) {
 
         if (!file.exists()) {
             return;
@@ -59,16 +60,16 @@ public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteResult
 
         if (file.isDirectory()) {
             for (final File childFile : file.listFiles()) {
-                this.deleteFileRecursively(childFile, fileDeleteResultBuilder);
+                this.deleteFileRecursively(childFile, fileDeleteCommandResultBuilder);
             }
         }
 
         if (this.isExpiredFile(file) && this.isTargetExtension(file)) {
 
-            fileDeleteResultBuilder.size(fileDeleteResultBuilder.getSize() + file.length());
+            fileDeleteCommandResultBuilder.size(fileDeleteCommandResultBuilder.getSize() + file.length());
 
             if (file.delete()) {
-                fileDeleteResultBuilder.count(fileDeleteResultBuilder.getCount() + 1);
+                fileDeleteCommandResultBuilder.count(fileDeleteCommandResultBuilder.getCount() + 1);
             }
         }
     }

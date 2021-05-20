@@ -19,19 +19,13 @@ import org.thinkit.api.catalog.BiCatalog;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-/**
- * The catalog that manages notification API.
- *
- * @author Kato Shinya
- * @since 1.0.0
- */
 @RequiredArgsConstructor
-public enum NotificationApi implements BiCatalog<NotificationApi, String> {
+public enum VariableName implements BiCatalog<VariableName, String> {
 
     /**
-     * The Line Notify
+     * {@code "LINE_NOTIFY_TOKEN"}
      */
-    LINE_NOTIFY(0, "https://notify-api.line.me/api/notify");
+    LINE_NOTIFY_TOKEN(900, "LINE_NOTIFY_TOKEN");
 
     /**
      * The code

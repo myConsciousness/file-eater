@@ -27,11 +27,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 import org.thinkit.bot.filater.FileDeleter;
+import org.thinkit.bot.filater.batch.catalog.VariableName;
+import org.thinkit.bot.filater.batch.data.content.mapper.DefaultVariableMapper;
 import org.thinkit.bot.filater.batch.data.entity.ActionRecord;
 import org.thinkit.bot.filater.batch.data.entity.Error;
 import org.thinkit.bot.filater.batch.data.entity.LastAction;
+import org.thinkit.bot.filater.batch.data.entity.Variable;
 import org.thinkit.bot.filater.batch.data.repository.ErrorRepository;
 import org.thinkit.bot.filater.batch.data.repository.LastActionRepository;
+import org.thinkit.bot.filater.batch.data.repository.VariableRepository;
 import org.thinkit.bot.filater.batch.dto.MongoCollections;
 import org.thinkit.bot.filater.batch.policy.BatchTask;
 import org.thinkit.bot.filater.batch.result.BatchTaskResult;
@@ -134,6 +138,58 @@ public abstract class AbstractTasklet implements Tasklet {
         return batchTaskResult.getRepeatStatus();
     }
 
+    protected String getVariableValue(@NonNull final VariableName variableName) {
+        return this.getVariable(variableName).getValue();
+    }
+
+    protected int getIntVariableValue(@NonNull final VariableName variableName) {
+        return Integer.parseInt(this.getVariable(variableName).getValue());
+    }
+
+    /**
+     * Returns the variable from {@code Variable} collection on MongoDB linked by
+     * the {@code variableName} passed as an argument. If the corresponding variable
+     * document does not exist in the {@code Variable} collection, it will be
+     * generated with the default value.
+     *
+     * @param variableName The variable name
+     * @return The variable linked by the {@code variableName} passed as an argument
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
+    protected Variable getVariable(@NonNull final VariableName variableName) {
+        log.debug("START");
+
+        final VariableRepository variableRepository = this.mongoCollections.getVariableRepository();
+        Variable variable = variableRepository.findByName(variableName.getTag());
+
+        if (variable == null) {
+            variable = new Variable();
+            variable.setName(variableName.getTag());
+            variable.setValue(this.getDefaultVariableValue(variableName));
+
+            variable = variableRepository.insert(variable);
+            log.debug("Inserted variable: {}", variable);
+        }
+
+        log.debug("The variable: {}", variable);
+        log.debug("END");
+        return variable;
+    }
+
+    protected void saveVariable(@NonNull final VariableName variableName, @NonNull final Object value) {
+        log.debug("START");
+
+        final Variable variable = this.getVariable(variableName);
+        variable.setValue(String.valueOf(value));
+        variable.setUpdatedAt(new Date());
+
+        this.mongoCollections.getVariableRepository().save(variable);
+        log.debug("Updated variable: {}", variable);
+
+        log.debug("END");
+    }
+
     private void saveActionRecord(final int actionCount) {
         log.debug("START");
 
@@ -200,5 +256,10 @@ public abstract class AbstractTasklet implements Tasklet {
         log.debug("Updated last action: {}", lastAction);
 
         log.debug("END");
+    }
+
+    private String getDefaultVariableValue(@NonNull final VariableName variableName) {
+        final DefaultVariableMapper defaultVariableMapper = DefaultVariableMapper.from(variableName.getTag());
+        return defaultVariableMapper.scan().get(0).getValue();
     }
 }

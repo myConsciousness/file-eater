@@ -28,6 +28,7 @@ import org.thinkit.bot.filater.batch.data.repository.FileDeleteRuleRepository;
 import org.thinkit.bot.filater.batch.result.BatchTaskResult;
 import org.thinkit.bot.filater.catalog.TaskType;
 import org.thinkit.bot.filater.config.FileDeleteConfig;
+import org.thinkit.bot.filater.result.FileDeleteCommandResult;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -72,7 +73,8 @@ public final class ExecuteDeleteFileTasklet extends AbstractTasklet {
         final List<FileDeleteRule> fileDeleteRules = fileDeleteRuleRepository.findAll();
 
         for (final FileDeleteRule fileDeleteRule : fileDeleteRules) {
-            fileDeleter.executeFileDelete(this.getFileDeleteConfig(fileDeleteRule));
+            final FileDeleteCommandResult fileDeleteResult = fileDeleter
+                    .executeFileDelete(this.getFileDeleteConfig(fileDeleteRule));
         }
 
         log.debug("END");

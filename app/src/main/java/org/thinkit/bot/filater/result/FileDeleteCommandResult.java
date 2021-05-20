@@ -33,7 +33,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class FileDeleteResult implements Serializable {
+public final class FileDeleteCommandResult implements Serializable {
 
     /**
      * The count
@@ -47,11 +47,11 @@ public final class FileDeleteResult implements Serializable {
     @Getter
     private long size;
 
-    public static FileDeleteResultBuilder builder() {
-        return new FileDeleteResultBuilder();
+    public static FileDeleteCommandResultBuilder builder() {
+        return new FileDeleteCommandResultBuilder();
     }
 
-    public static class FileDeleteResultBuilder {
+    public static class FileDeleteCommandResultBuilder {
 
         /**
          * The count
@@ -65,25 +65,25 @@ public final class FileDeleteResult implements Serializable {
         @Getter
         private long size;
 
-        public FileDeleteResultBuilder count(final int count) {
+        public FileDeleteCommandResultBuilder count(final int count) {
             this.count = count;
             return this;
         }
 
-        public FileDeleteResultBuilder size(final long size) {
+        public FileDeleteCommandResultBuilder size(final long size) {
             this.size = size;
             return this;
         }
 
-        public FileDeleteResult build() {
+        public FileDeleteCommandResult build() {
             Preconditions.requirePositive(count);
             Preconditions.requirePositive(size);
 
-            final FileDeleteResult fileDeleteResult = new FileDeleteResult();
-            fileDeleteResult.count = this.count;
-            fileDeleteResult.size = this.size;
+            final FileDeleteCommandResult fileDeleteCommandResult = new FileDeleteCommandResult();
+            fileDeleteCommandResult.count = this.count;
+            fileDeleteCommandResult.size = this.size;
 
-            return fileDeleteResult;
+            return fileDeleteCommandResult;
         }
     }
 }

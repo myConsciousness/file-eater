@@ -14,7 +14,15 @@
 
 package org.thinkit.bot.filater.batch.report;
 
+import java.util.List;
+
+import org.apache.commons.io.FileUtils;
+import org.thinkit.bot.filater.batch.data.entity.FileDeleteResult;
+import org.thinkit.bot.filater.batch.data.repository.FileDeleteResultRepository;
 import org.thinkit.bot.filater.batch.dto.MongoCollections;
+import org.thinkit.bot.filater.catalog.DateFormat;
+import org.thinkit.bot.filater.catalog.TaskType;
+import org.thinkit.bot.filater.util.DateUtils;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -35,6 +43,25 @@ public final class LineMessageBuilder implements MessageBuilder {
 
     @Override
     public String build() {
-        return "TEST";
+
+        final FileDeleteResultRepository fileDeleteResultRepository = mongoCollections.getFileDeleteResultRepository();
+
+        final String executedAt = DateUtils.toString(DateFormat.YYYY_MM_DD, DateUtils.now());
+        final List<FileDeleteResult> fileDeleteResults = fileDeleteResultRepository
+                .findByTaskTypeCodeAndExecutedAt(TaskType.DELETE_FILE.getCode(), executedAt);
+
+        int sumCount = 0;
+        long sumSize = 0;
+        for (final FileDeleteResult fileDeleteResult : fileDeleteResults) {
+            sumCount += fileDeleteResult.getCount();
+            sumSize += fileDeleteResult.getSize();
+        }
+
+        return """
+                File Delete Result (%s)
+                ---------------------------
+                Deleted File Count: %s
+                Deleted File Size: %s
+                """.formatted(executedAt, sumCount, FileUtils.byteCountToDisplaySize(sumSize));
     }
 }

@@ -31,6 +31,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * The class that manages the file delete command.
+ *
+ * @author Kato Shinya
+ * @since 1.0.0
+ */
 @ToString
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -52,6 +58,17 @@ public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteComman
         return fileDeleteCommandResultBuilder.build();
     }
 
+    /**
+     * Detects and recursively deletes files that have expired based on the period
+     * days set in {@link FileDeleteConfig} . Recursive processing is performed if
+     * the file object is a directory.
+     *
+     * @param file                           The file
+     * @param fileDeleteCommandResultBuilder The builder of file delete command
+     *                                       result
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
     private void deleteFileRecursively(@NonNull final File file,
             FileDeleteCommandResult.FileDeleteCommandResultBuilder fileDeleteCommandResultBuilder) {
 
@@ -66,7 +83,6 @@ public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteComman
         }
 
         if (this.isExpiredFile(file) && this.isTargetExtension(file)) {
-
             fileDeleteCommandResultBuilder.size(fileDeleteCommandResultBuilder.getSize() + file.length());
 
             if (file.delete()) {
@@ -75,6 +91,22 @@ public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteComman
         }
     }
 
+    /**
+     * Checks if the file extension is the extension to be deleted.
+     *
+     * <p>
+     * The file extension to be deleted will be checked based on the value set in
+     * {@link FileDeleteConfig} . The file extension value to be deleted obtained
+     * from {@link FileDeleteConfig} and the file extension to be checked are
+     * normalized using the {@link #normalizeString(String)} method, so case and
+     * spaces before and after the value do not interfere with the comparison.
+     *
+     * @param file The file
+     * @return {@code true} if the file extension is the target extention to be
+     *         deleted, otherwise {@code false}
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
     private boolean isTargetExtension(@NonNull final File file) {
 
         final String targetExtension = this.normalizeString(this.fileDeleteConfig.getExtension());
@@ -87,6 +119,14 @@ public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteComman
         return targetExtension.equals(this.getFileExtension(file));
     }
 
+    /**
+     * Returns the extension from the file name.
+     *
+     * @param file The file name
+     * @return The file extension
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
     private String getFileExtension(@NonNull final File file) {
 
         final String fileName = file.getName();
@@ -103,11 +143,28 @@ public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteComman
                 fileName.substring(firstIndex + 1, lastIndex > firstIndex ? lastIndex : fileName.length()));
     }
 
+    /**
+     * Checks if the file object passed as an argument has expired.
+     *
+     * @param file The file
+     * @return {@code true} if the file is expired, otherwise {@code false}
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
     private boolean isExpiredFile(@NonNull final File file) {
         return DateUtils.getDateAfter(DateFormat.YYYY_MM_DD_HH_MM_SS, file.lastModified(),
                 this.fileDeleteConfig.getPeriodDays()).before(DateUtils.now());
     }
 
+    /**
+     * Normalizes the string passed as an argument by lowercasing it and trimming
+     * spaces before and after it.
+     *
+     * @param string The string
+     * @return The normalized string
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
     private String normalizeString(@NonNull final String string) {
         return string.toLowerCase().trim();
     }

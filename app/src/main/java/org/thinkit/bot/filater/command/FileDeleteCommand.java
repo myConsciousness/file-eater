@@ -96,7 +96,11 @@ public final class FileDeleteCommand extends AbstractBotCommand<FileDeleteComman
             return "";
         }
 
-        return this.normalizeString(fileName.substring(fileName.indexOf(dotDelimiter) + 1));
+        final int firstIndex = fileName.indexOf(dotDelimiter);
+        final int lastIndex = fileName.indexOf(dotDelimiter, firstIndex + 1);
+
+        return this.normalizeString(
+                fileName.substring(firstIndex + 1, lastIndex > firstIndex ? lastIndex : fileName.length()));
     }
 
     private boolean isExpiredFile(@NonNull final File file) {

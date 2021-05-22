@@ -33,6 +33,7 @@ import org.thinkit.bot.filater.batch.catalog.BatchJob;
 import org.thinkit.bot.filater.batch.dto.BatchStepCollections;
 
 /**
+ * The class that defines the configuration of a batch job process and schedule.
  *
  * @author Kato Shinya
  * @since 1.0.0
@@ -69,16 +70,31 @@ public class BatchJobConfiguration {
     @Autowired
     private BatchStepCollections batchStepCollections;
 
+    /**
+     * Registers the bean of {@link FileDeleter} .
+     *
+     * @return The new instance of {@link FileDeleter}
+     */
     @Bean
     public FileDeleter fileDeleter() {
         return Filater.newInstance();
     }
 
+    /**
+     * Performs the process of scheduled file deletion.
+     *
+     * @throws Exception When an error occurs in the scheduled file deletion process
+     */
     @Scheduled(cron = SCHEDULE_CRON, zone = TIME_ZONE)
-    public void performScheduledMainStream() throws Exception {
+    public void performScheduleFileDeletion() throws Exception {
         this.runJobLauncher();
     }
 
+    /**
+     * Runs the job launcher.
+     *
+     * @throws Exception When an error occurs in the scheduled file deletion process
+     */
     private void runJobLauncher() throws Exception {
         final JobParameters param = new JobParametersBuilder()
                 .addString(BatchJob.FILATER_BOT.getTag(), String.valueOf(System.currentTimeMillis())).toJobParameters();
@@ -86,15 +102,30 @@ public class BatchJobConfiguration {
         this.simpleJobLauncher.run(this.createFilaterBotJob(), param);
     }
 
+    /**
+     * Returns the batch job of Filater bot.
+     *
+     * @return The batch job of Filater bot
+     */
     private Job createFilaterBotJob() {
         return this.createDeleteFileJobFlowBuilder().end().build();
     }
 
+    /**
+     * Returns the job flow object of delete file process.
+     *
+     * @return The job flow object of delete file process
+     */
     private FlowBuilder<FlowJobBuilder> createDeleteFileJobFlowBuilder() {
         return this.getFilaterBotJobBuilder().flow(batchStepCollections.getExecuteDeleteFileStep())
                 .next(batchStepCollections.getNotifyResultReportStep());
     }
 
+    /**
+     * Returns the job builder of Filater bot.
+     *
+     * @return The job builder of Filater bot
+     */
     private JobBuilder getFilaterBotJobBuilder() {
         return this.jobBuilderFactory.get(BatchJob.FILATER_BOT.getTag());
     }

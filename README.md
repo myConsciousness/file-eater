@@ -7,14 +7,23 @@
 
 - [1. File Eater](#1-file-eater)
   - [1.1. What is it?](#11-what-is-it)
-  - [1.2. License](#12-license)
-  - [1.3. More Information](#13-more-information)
+  - [1.2. Motivation](#12-motivation)
+  - [1.3. License](#13-license)
+  - [1.4. More Information](#14-more-information)
 
 ## 1.1. What is it?
 
-File Eater main repository.
+This batch application resides in the background and periodically deletes files according to the file deletion rules defined by the user.
 
-## 1.2. License
+## 1.2. Motivation
+
+1. Automate the deletion of files that tend to accumulate without being used, such as log files.
+
+2. The program executes the deletion periodically according to the rules without human intervention.
+
+3. General-purpose deletion processing in both horizontal and vertical directions independent of directory structure.
+
+## 1.3. License
 
 ```license
 Copyright 2021 Kato Shinya.
@@ -30,7 +39,7 @@ or implied. See the License for the specific language governing permissions and 
 the License.
 ```
 
-## 1.3. More Information
+## 1.4. More Information
 
 `File Eater` was designed and implemented by Kato Shinya, who works as a freelance developer.
 

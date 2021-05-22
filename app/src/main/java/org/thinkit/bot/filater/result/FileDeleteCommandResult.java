@@ -47,10 +47,18 @@ public final class FileDeleteCommandResult implements Serializable {
     @Getter
     private long size;
 
+    /**
+     * Returns the new instance of builder object.
+     *
+     * @return The new instance of builder object
+     */
     public static FileDeleteCommandResultBuilder builder() {
         return new FileDeleteCommandResultBuilder();
     }
 
+    /**
+     * The inner builder class for {@link FileDeleteCommandResult} .
+     */
     public static class FileDeleteCommandResultBuilder {
 
         /**
@@ -65,16 +73,34 @@ public final class FileDeleteCommandResult implements Serializable {
         @Getter
         private long size;
 
+        /**
+         * Sets the count.
+         *
+         * @param count The count
+         * @return This builder instance
+         */
         public FileDeleteCommandResultBuilder count(final int count) {
             this.count = count;
             return this;
         }
 
+        /**
+         * Sets the size.
+         *
+         * @param size The size
+         * @return This builder instance
+         */
         public FileDeleteCommandResultBuilder size(final long size) {
             this.size = size;
             return this;
         }
 
+        /**
+         * Returns the new instance of {@link FileDeleteCommandResult} based on the set
+         * values by {@link #count(int)} and {@link #size(long)} .
+         *
+         * @return The new instance of {@link FileDeleteCommandResult}
+         */
         public FileDeleteCommandResult build() {
             Preconditions.requirePositive(count);
             Preconditions.requirePositive(size);

@@ -28,6 +28,12 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * The tasklet manages operations of notify result report step.
+ *
+ * @author Kato Shinya
+ * @since 1.0.0
+ */
 @Slf4j
 @ToString
 @EqualsAndHashCode(callSuper = false)
@@ -65,6 +71,11 @@ public final class NotifyResultReportTasklet extends AbstractTasklet {
         return batchTaskResultBuilder.build();
     }
 
+    /**
+     * Returns the line notify token.
+     *
+     * @return The Line Notify token
+     */
     private String getLineNotifyToken() {
         return super.getVariableValue(VariableName.LINE_NOTIFY_TOKEN);
     }

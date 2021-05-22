@@ -14,7 +14,18 @@
 
 package org.thinkit.bot.filater.command;
 
+/**
+ * The interface that represents bot command.
+ *
+ * @author Kato Shinya
+ * @since 1.0.0
+ */
 public interface BotCommand<R> {
 
+    /**
+     * Executes bot command and returns the result object.
+     *
+     * @return The result object
+     */
     public R execute();
 }

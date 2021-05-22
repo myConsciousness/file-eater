@@ -19,12 +19,24 @@ import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * The class that defines the basic configuration of a batch process.
+ *
+ * @author Kato Shinya
+ * @since 1.0.0
+ */
 @Configuration
 public class BatchConfiguration {
 
+    /**
+     * Registers the bean of {@link SimpleJobLauncher} .
+     *
+     * @param jobRepository The job repository
+     * @return The new instance of {@link SimpleJobLauncher}
+     */
     @Bean
     public SimpleJobLauncher simpleJobLauncher(JobRepository jobRepository) {
-        SimpleJobLauncher launcher = new SimpleJobLauncher();
+        final SimpleJobLauncher launcher = new SimpleJobLauncher();
         launcher.setJobRepository(jobRepository);
         return launcher;
     }

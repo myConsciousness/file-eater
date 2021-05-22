@@ -40,7 +40,7 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * The tasklet manages operations related to the delete file command.
+ * The tasklet manages operations of delete file step.
  *
  * @author Kato Shinya
  * @since 1.0.0
@@ -100,6 +100,14 @@ public final class ExecuteDeleteFileTasklet extends AbstractTasklet {
         return BatchTaskResult.builder().build();
     }
 
+    /**
+     * Returns the file delete config.
+     *
+     * @param fileDeleteRule The file delete rule
+     * @return The file delete config
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
     private FileDeleteConfig getFileDeleteConfig(@NonNull final FileDeleteRule fileDeleteRule) {
         log.debug("START");
 

@@ -14,7 +14,18 @@
 
 package org.thinkit.bot.filater.batch.report;
 
+/**
+ * The interface that represents the process of message building.
+ *
+ * @author Kato Shinya
+ * @since 1.0.0
+ */
 public interface MessageBuilder {
 
+    /**
+     * Returns the built message.
+     *
+     * @return The message
+     */
     public String build();
 }

@@ -20,8 +20,22 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import org.thinkit.bot.filater.batch.data.entity.FileDeleteResult;
 
+/**
+ * The ineterface that manages file delete result repository.
+ *
+ * @author Kato Shinya
+ * @since 1.0.0
+ */
 @Repository
 public interface FileDeleteResultRepository extends MongoRepository<FileDeleteResult, String> {
 
+    /**
+     * Returns the list of file delete result based on the task type code and
+     * execute datetime passed as arguments.
+     *
+     * @param taskTypeCode The task type code
+     * @param executedAt   The executed datetime
+     * @return The list of file delete result
+     */
     public List<FileDeleteResult> findByTaskTypeCodeAndExecutedAt(int taskTypeCode, String executedAt);
 }

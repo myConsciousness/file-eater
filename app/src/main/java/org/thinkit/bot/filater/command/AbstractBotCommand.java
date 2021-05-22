@@ -19,10 +19,21 @@ import java.io.Serializable;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * The class that abstracts the bot command.
+ *
+ * @author Kato Shinya
+ * @since 1.0.0
+ */
 @ToString
 @EqualsAndHashCode
 public abstract class AbstractBotCommand<R> implements BotCommand<R>, Serializable {
 
+    /**
+     * Executes the defined bot process and returns the result object.
+     *
+     * @return The result object
+     */
     protected abstract R executeBotProcess();
 
     @Override

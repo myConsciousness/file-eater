@@ -23,6 +23,13 @@ import org.springframework.context.annotation.Configuration;
 import org.thinkit.bot.filater.batch.catalog.BatchStep;
 import org.thinkit.bot.filater.batch.dto.BatchStepCollections;
 
+/**
+ * The class that defines the configuration of a batch step process and
+ * schedule.
+ *
+ * @author Kato Shinya
+ * @since 1.0.0
+ */
 @Configuration
 public class BatchStepConfiguration {
 
@@ -44,6 +51,11 @@ public class BatchStepConfiguration {
     @Autowired
     private Tasklet notifyResultReportTasklet;
 
+    /**
+     * Registers the bean of {@link BatchStepCollections} .
+     *
+     * @return The new instance of {@link BatchStepCollections}
+     */
     @Bean
     public BatchStepCollections batchStepCollections() {
         final BatchStepCollections.BatchStepCollectionsBuilder batchStepCollectionsBuilder = BatchStepCollections
@@ -54,11 +66,21 @@ public class BatchStepConfiguration {
         return batchStepCollectionsBuilder.build();
     }
 
+    /**
+     * Returns the delete file step
+     *
+     * @return The delete file step
+     */
     private Step executeDeleteFileStep() {
         return this.stepBuilderFactory.get(BatchStep.EXECUTE_DELETE_FILE.getTag())
                 .tasklet(this.executeDeleteFileTasklet).build();
     }
 
+    /**
+     * Returns the noify result report step
+     *
+     * @return The notify result report step
+     */
     private Step notifyResultReportStep() {
         return this.stepBuilderFactory.get(BatchStep.NOTIFY_RESULT_REPORT.getTag())
                 .tasklet(this.notifyResultReportTasklet).build();

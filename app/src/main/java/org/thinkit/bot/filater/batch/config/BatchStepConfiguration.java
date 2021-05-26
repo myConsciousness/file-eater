@@ -52,9 +52,9 @@ public class BatchStepConfiguration {
     private Tasklet notifyResultReportTasklet;
 
     /**
-     * Registers the bean of {@link BatchStepCollections} .
+     * Registers the instance of {@link BatchStepCollections} as bean.
      *
-     * @return The new instance of {@link BatchStepCollections}
+     * @return The instance of {@link BatchStepCollections}
      */
     @Bean
     public BatchStepCollections batchStepCollections() {

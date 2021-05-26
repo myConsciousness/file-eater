@@ -71,9 +71,9 @@ public class BatchJobConfiguration {
     private BatchStepCollections batchStepCollections;
 
     /**
-     * Registers the bean of {@link FileDeleter} .
+     * Registers the instance of {@link FileDeleter} as bean.
      *
-     * @return The new instance of {@link FileDeleter}
+     * @return The instance of {@link FileDeleter}
      */
     @Bean
     public FileDeleter fileDeleter() {

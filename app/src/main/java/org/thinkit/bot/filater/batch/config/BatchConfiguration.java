@@ -29,10 +29,10 @@ import org.springframework.context.annotation.Configuration;
 public class BatchConfiguration {
 
     /**
-     * Registers the bean of {@link SimpleJobLauncher} .
+     * Registers the instance of {@link SimpleJobLauncher} as bean.
      *
      * @param jobRepository The job repository
-     * @return The new instance of {@link SimpleJobLauncher}
+     * @return The instance of {@link SimpleJobLauncher}
      */
     @Bean
     public SimpleJobLauncher simpleJobLauncher(JobRepository jobRepository) {

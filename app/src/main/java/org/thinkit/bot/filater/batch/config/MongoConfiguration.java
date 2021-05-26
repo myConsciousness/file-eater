@@ -78,9 +78,9 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
     }
 
     /**
-     * The bean that returns the mongo collections.
+     * Registers the instance of {@link MongoCollections} as bean
      *
-     * @return The mongo collections.
+     * @return The instance of {@link MongoCollections}
      */
     @Bean
     public MongoCollections mongoCollections() {

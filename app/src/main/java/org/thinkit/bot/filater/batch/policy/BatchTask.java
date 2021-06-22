@@ -49,4 +49,13 @@ public final class BatchTask implements Serializable {
     public int getTypeCode() {
         return this.taskType.getCode();
     }
+
+    /**
+     * Checks if the task is closable.
+     *
+     * @return {@code true} if the task is closable, otherwise {@code false}
+     */
+    public boolean isClosable() {
+        return this.taskType == TaskType.CLOSE_SESSION;
+    }
 }

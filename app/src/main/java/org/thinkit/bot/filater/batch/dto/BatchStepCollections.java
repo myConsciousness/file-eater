@@ -50,4 +50,10 @@ public final class BatchStepCollections implements Serializable {
      */
     @Getter
     private Step notifyResultReportStep;
+
+    /**
+     * The close session step
+     */
+    @Getter
+    private Step closeSessionStep;
 }

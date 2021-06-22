@@ -145,6 +145,10 @@ public abstract class AbstractTasklet implements Tasklet {
 
         this.updateEndAction();
 
+        if (this.batchTask.isClosable()) {
+            this.closeSession();
+        }
+
         log.debug("END");
         return batchTaskResult.getRepeatStatus();
     }
@@ -153,7 +157,7 @@ public abstract class AbstractTasklet implements Tasklet {
      * Returns the variable value linked to the variable name passed as an argument.
      *
      * @param variableName The variable name
-     * @return The variable value linked to the variabl name passed as an argument
+     * @return The variable value linked to the variabe name passed as an argument
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
@@ -312,6 +316,13 @@ public abstract class AbstractTasklet implements Tasklet {
         log.debug("Updated last action: {}", lastAction);
 
         log.debug("END");
+    }
+
+    /**
+     * Close the session.
+     */
+    private void closeSession() {
+        this.context.close();
     }
 
     /**

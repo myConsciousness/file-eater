@@ -52,6 +52,12 @@ public class BatchStepConfiguration {
     private Tasklet notifyResultReportTasklet;
 
     /**
+     * The close session tasklet
+     */
+    @Autowired
+    private Tasklet closeSessionTasklet;
+
+    /**
      * Registers the instance of {@link BatchStepCollections} as bean.
      *
      * @return The instance of {@link BatchStepCollections}
@@ -62,6 +68,7 @@ public class BatchStepConfiguration {
                 .builder();
         batchStepCollectionsBuilder.executeDeleteFileStep(this.executeDeleteFileStep());
         batchStepCollectionsBuilder.notifyResultReportStep(this.notifyResultReportStep());
+        batchStepCollectionsBuilder.closeSessionStep(this.closeSessionStep());
 
         return batchStepCollectionsBuilder.build();
     }
@@ -84,5 +91,14 @@ public class BatchStepConfiguration {
     private Step notifyResultReportStep() {
         return this.stepBuilderFactory.get(BatchStep.NOTIFY_RESULT_REPORT.getTag())
                 .tasklet(this.notifyResultReportTasklet).build();
+    }
+
+    /**
+     * Returns the close session step
+     *
+     * @return The close session step
+     */
+    private Step closeSessionStep() {
+        return this.stepBuilderFactory.get(BatchStep.CLOSE_SESSION.getTag()).tasklet(this.closeSessionTasklet).build();
     }
 }
